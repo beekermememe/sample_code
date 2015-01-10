@@ -1,10 +1,9 @@
 # 1 read in the data
-require "destination_data_ingestor"
+require "destination_taxonomy_ingestor"
 require "pry"
 
-ingestor = DestinationDataIngestor.new({
+ingestor = destination_taxonomy_ingestorIngestor.new({
   taxonomy_file: "#{Dir.pwd}/input/taxonomy.xml",
-  destinations_file: "#{Dir.pwd}/input/destinations.xml"
 })
 destinations = ingestor.ingest
 binding.pry

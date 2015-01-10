@@ -26,20 +26,18 @@ require 'destination_data'
 # once this is done, we can create a lookup table with the destination and the atlas id
 # then we can go through the destinations an update the content for eash destination object
 
-class DestinationDataIngestor
+class DestinationTaxonomyIngestor
 
-  def initialize(files_to_process = {taxonomy_file: "", destinations_file: ""})
+  def initialize(files_to_process = {taxonomy_file: ""})
     @taxonomy_file = files_to_process[:taxonomy_file]
-    @destinations_file = files_to_process[:destinations_file]
   end
 
   # we return a lookup table from here - we use the atlas ID as the key for the data container that we
   # use later to help populate the template of the web page that is generated
 
   def ingest
-    return "one filename is blank" if @taxonomy_file == "" || @destinations_file == ""
+    return "filename is blank" if @taxonomy_file == ""
     taxonomy_doc = read_taxonomy
-    destinations_doc = read_destinations
 
     xpath = find_deepest_node(taxonomy_doc)
     destinations_lookup = {}
@@ -51,10 +49,6 @@ class DestinationDataIngestor
 
   def read_taxonomy
     read_file(@taxonomy_file)
-  end
-
-  def read_destinations
-    read_file(@destinations_file)
   end
 
   def read_file(filename)

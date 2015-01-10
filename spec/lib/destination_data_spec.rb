@@ -1,7 +1,7 @@
 require 'destination_data.rb'
 require 'pry'
 
-RSpec.describe DestinationDataIngestor do
+RSpec.describe DestinationData do
   describe ".initialize" do
     it "should populate model data" do
       newDestination = DestinationData.new({atlas_id: 1, parent_atlas_id: 2, parent_name: "parent", name: "name"})
@@ -26,7 +26,7 @@ RSpec.describe DestinationDataIngestor do
   end
 
   describe ".update" do
-    it "shoudl update the name and id properties of the object" do
+    it "should update the name and id properties of the object" do
       parent = DestinationData.new({atlas_id: 4, name: "parent"})
       parent.update({atlas_id: 4, parent_atlas_id: 2, parent_name: "grandparent", name: "parent"})
       expect(parent.atlas_id).to equal 4
