@@ -22,21 +22,13 @@ class DestinationDocBuilder
   end
 
   # Using the lookup hash we can find the place_name
-  def child_link_info(child_id)
-    child_doc = @doc_data[child_id]
-    child_name = child_doc.nil? ? nil : child_doc.content.place_name
-    child_link = child_doc.nil? ? nil : doc_link(child_doc)
-    return child_name,child_link
-  end
 
-  # Using the lookup hash we can find the place_name
-  def parent_link_info(parent_id)
-    parent_doc = @doc_data[parent_id]
-    parent_name = parent_doc.nil? ? nil : parent_doc.content.place_name
-    parent_link = parent_doc.nil? ? nil : doc_link(parent_doc)
-    return parent_name,parent_link
+  def get_link_info(destination_id)
+    doc = @doc_data[destination_id]
+    name = doc.nil? ? nil : doc.content.place_name
+    link = doc.nil? ? nil : doc_link(doc)
+    return name,link
   end
-
   # Change this if you need to customize the url
 
   def doc_link(destination_data)
@@ -51,12 +43,12 @@ class DestinationDocBuilder
 
     child_links = []
     destination_data.child_node_ids.each do |id|
-      child_name,child_link = child_link_info(id)
+      child_name,child_link = get_link_info(id)
       next if child_name.nil?
       child_links << {name: child_name, link: child_link}
     end
 
-    parent_name,parent_link = destination_data.parent_atlas_id.nil? ? [nil,nil] : parent_link_info(destination_data.parent_atlas_id)
+    parent_name,parent_link = destination_data.parent_atlas_id.nil? ? [nil,nil] : get_link_info(destination_data.parent_atlas_id)
     return eruby.result(binding()).to_s
   end
 

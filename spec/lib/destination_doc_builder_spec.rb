@@ -63,23 +63,13 @@ RSpec.describe DestinationData do
       },
       "#{Dir.pwd}/spec/support/test_output_folder")}
 
-    it "should return the displayable name and url for a parent destination" do
+    it "should return the displayable name and url for a destination" do
       expect(doc_builder.doc_data[2].content).to receive(:place_name).and_return("A big far away place")
       expect(doc_builder).to receive(:doc_link).and_return("/aparentlink")
 
-      name,link = doc_builder.parent_link_info(2)
+      name,link = doc_builder.get_link_info(2)
       expect(name).to match "A big far away place"
       expect(link).to match "aparentlink"
-    end
-
-    it "should return the displayable name and url for a child destination" do
-      expect(doc_builder.doc_data[1].content).to receive(:place_name).and_return("A far away place")
-      expect(doc_builder).to receive(:doc_link).and_return("/alink")
-
-      name,link = doc_builder.child_link_info(1)
-
-      expect(name).to match "A far away place"
-      expect(link).to match "/alink"
     end
 
     it "should return file name to where a document would be saved" do
