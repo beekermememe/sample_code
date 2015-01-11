@@ -31,8 +31,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  erubis
-  nokogiri
-  pry
-  rspec
-  stringex
+  erubis (~> 2.7.0)
+  nokogiri (~> 1.6.5)
+  pry (~> 0.10.1)
+  rspec (~> 3.1.0)
+  stringex (~> 2.5.2)

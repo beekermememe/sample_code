@@ -1,5 +1,4 @@
 require 'destination_content.rb'
-require 'pry'
 
 RSpec.describe DestinationContent do
   describe ".initialize" do

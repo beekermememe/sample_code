@@ -5,7 +5,7 @@ class DestinationDocBuilder
   attr_reader :doc_data
   def initialize(doc_data = nil,output_folder = nil, template_file = nil)
     @doc_data = doc_data
-    @output_folder = output_folder.nil? ? "#{Dir.pwd}/output" : "#{Dir.pwd}/#{output_folder}"
+    @output_folder = output_folder.nil? ? "#{Dir.pwd}/output" : "#{output_folder}"
     @template = template_file.nil? ? "#{Dir.pwd}/lib/templates/destination_template.eruby" : template_file
   end
 

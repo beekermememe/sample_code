@@ -1,5 +1,4 @@
 require 'destination_data.rb'
-require 'pry'
 
 RSpec.describe DestinationData do
   describe ".initialize" do

@@ -1,5 +1,4 @@
 require 'destination_taxonomy_ingestor.rb'
-require 'pry'
 
 RSpec.describe DestinationTaxonomyIngestor do
   describe ".initialize" do

@@ -1,5 +1,4 @@
 require 'destination_meta_data_ingestor.rb'
-require 'pry'
 
 RSpec.describe DestinationMetaDataIngestor do
   describe ".initialize" do

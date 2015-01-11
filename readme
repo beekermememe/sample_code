@@ -1,3 +1,45 @@
 # Exercise
 
 The goal of the exercise was to parse 2 files, one containing a relational graph between places, the other containing various metadata for the place.
+
+The batch processor was to take the location of the two input files and the output directory as parameters.
+
+The app is written for ruby 2.1.5
+Bundler is used to manage gem/versions.
+
+Flow:
+
+The App has 2 ingestor classes which are responsible for parsing one file each.
+The ingestor classes share data structure (_data and _content).
+
+The destination_content class is tailored to store information retrieved from the destinations.xml file.
+
+The destination_data class is the top level container for a destinations data, the will contain a destination_content object which is referenced in the _builder class to populate the template for the output file.
+
+The flow is
+  - Read in taxonomy data - return a hash table with the atlas_id as the key for the data object
+  - Read in destinations data - return a hash table with the atlas_id as the key and the content object as the value
+  - Go through the taxonomy hash and update each data object with the content for that atlas_id
+  - Pass the updated hash table to the builder class and call the populate_html_files method
+
+A sample of the flow can be seen in runner.rb
+
+To run this code
+
+Install ruby 2.1.5
+Install bundle
+bundle install
+ruby -Ilib runner.rb mytaxonomyfile.xml mydestinationsfile.xml myoutputfolder
+open a browser and navigate to the output folder and open a file that was created. You should be able to navigate
+
+To run specs
+
+Install ruby 2.1.5
+Install bundle
+bundle install
+rspec
+
+Some Notes:
+
+I use pry for debugging. This was my first time using RSPEC 3.1 so it was interesting learning about doubles. Most of my classes try to avoid instance variables when executing functions. If I do use them, I try to rely on the ones that are immutable. I used erubis for templating the html and added some template logic to hide/show elements based on the state of the data passed. I did a sanity check using the 2 files passed and was able to navigate up and down successfully.
+
