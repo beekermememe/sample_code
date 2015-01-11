@@ -14,6 +14,8 @@ class DestinationMetaDataIngestor
   def ingest
     return "filename is blank" if @destinations_file == ""
     destinations_doc = read_destinations
+    destination_data = parse_xml_file(destinations_doc)
+    return destination_data
   end
 
   def read_destinations
@@ -36,8 +38,9 @@ class DestinationMetaDataIngestor
     lookup = {}
     xml_doc.xpath("/destinations/destination").each do |destination_xml|
       data_hash = {}
-      data_hash[:atlas_id] = destination_xml.attributes["atlas_id"].value if destination_xml.attributes["atlas_id"].value
-      data_hash[:title_ascii] = destination_xml.attributes["title_ascii"].value if destination_xml.attributes["title_ascii"].value
+      data_hash[:atlas_id] = destination_xml.attributes["atlas_id"].value if destination_xml.attributes["atlas_id"]
+      next unless data_hash[:atlas_id]
+      data_hash[:title_ascii] = destination_xml.attributes["title-ascii"].value if destination_xml.attributes["title-ascii"]
       data_hash[:introductions] = get_destination_introductions(destination_xml)
       data_hash[:history] = get_destination_history(destination_xml)
       before_you_go, dangers_and_annoyances = get_destination_practical_information(destination_xml)
@@ -45,7 +48,7 @@ class DestinationMetaDataIngestor
       data_hash[:weather] = get_destination_weather(destination_xml)
       car,local = get_destination_transport(destination_xml)
       data_hash[:transport] = {car: car, local: local}
-      lookup[data_hash[:atlas_id]] ||= data_hash if lookup[data_hash[:atlas_id]]
+      lookup[data_hash[:atlas_id]] ||= data_hash
     end
     lookup
   end

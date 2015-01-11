@@ -76,5 +76,13 @@ RSpec.describe DestinationMetaDataIngestor do
         expect(getting_around_local.length).to equal 1
       end
     end
+
+    describe ".parse_xml_file" do
+      it "should parse everything without an exception and return a hash of data" do
+        doc_data = ingestor.parse_xml_file(ingestor.read_destinations)
+        expect(doc_data.count).to equal 24
+        expect(doc_data['355064'].count).to equal 7
+      end
+    end
   end
 end

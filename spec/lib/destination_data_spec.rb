@@ -43,6 +43,7 @@ RSpec.describe DestinationData do
       child = DestinationData.new({atlas_id: 1, parent_atlas_id: 4, parent_name: "parent", name: "name"})
       parent.add_child_node child
       expect(parent.child_node_slugs).to match [child.slug]
+      expect(parent.child_node_ids).to match [child.atlas_id]
     end
 
   end
