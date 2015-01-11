@@ -2,10 +2,11 @@ require 'destination_data'
 require 'erubis'
 
 class DestinationDocBuilder
-  def initialize(doc_data = nil,output_folder = nil)
+  attr_reader :doc_data
+  def initialize(doc_data = nil,output_folder = nil, template_file = nil)
     @doc_data = doc_data
-    @output_folder = "#{Dir.pwd}/#{output_folder}"
-    @template = "#{Dir.pwd}/lib/templates/destination_template.eruby"
+    @output_folder = output_folder.nil? ? "#{Dir.pwd}/output" : "#{Dir.pwd}/#{output_folder}"
+    @template = template_file.nil? ? "#{Dir.pwd}/lib/templates/destination_template.eruby" : template_file
   end
 
   def populate_html_files
@@ -14,10 +15,13 @@ class DestinationDocBuilder
     end
   end
 
+  # This is where is set the output file name
+  # we are using the slug to make a safe filename
   def doc_file_name(destination_data)
     @output_folder + "/" + destination_data.slug + ".html"
   end
 
+  # Using the lookup hash we can find the place_name
   def child_link_info(child_id)
     child_doc = @doc_data[child_id]
     child_name = child_doc.nil? ? nil : child_doc.content.place_name
@@ -25,6 +29,7 @@ class DestinationDocBuilder
     return child_name,child_link
   end
 
+  # Using the lookup hash we can find the place_name
   def parent_link_info(parent_id)
     parent_doc = @doc_data[parent_id]
     parent_name = parent_doc.nil? ? nil : parent_doc.content.place_name
@@ -37,6 +42,8 @@ class DestinationDocBuilder
   def doc_link(destination_data)
     doc_file_name(destination_data)
   end
+  
+  # returns a string that can be written to a file
 
   def populate_template(destination_data)
     eruby = Erubis::Eruby.new(File.read @template)

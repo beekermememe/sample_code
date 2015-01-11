@@ -4,14 +4,22 @@ require 'pry'
 RSpec.describe DestinationData do
   describe ".initialize" do
     it "should populate model data" do
-      newDestination = DestinationData.new({atlas_id: 1, parent_atlas_id: 2, parent_name: "parent", name: "name"})
+      newDestination = DestinationData.new({
+        atlas_id: 1,
+        parent_atlas_id: 2,
+        parent_name: "parent",
+        name: "name",
+        content: "content",
+        child_node_ids: "child_node_ids"
+      })
       expect(newDestination.atlas_id).to equal 1
       expect(newDestination.parent_atlas_id).to equal 2
       expect(newDestination.destination_name).to match "name"
       expect(newDestination.parent_name).to match "parent"
       expect(newDestination.child_node_slugs).to match []
+      expect(newDestination.content).to match "content"
+      expect(newDestination.child_node_ids).to match "child_node_ids"
     end
-
   end
 
   describe ".slug methods" do
@@ -38,7 +46,7 @@ RSpec.describe DestinationData do
   end
 
   describe ".add_child_node" do
-    it "should add the slug of the child node" do
+    it "should add the slug of the child node and child atlas_id" do
       parent = DestinationData.new({atlas_id: 4, name: "parent"})
       child = DestinationData.new({atlas_id: 1, parent_atlas_id: 4, parent_name: "parent", name: "name"})
       parent.add_child_node child
