@@ -11,7 +11,7 @@ class DestinationDocBuilder
 
   def populate_html_files
     @doc_data.each do |key,data|
-      write_template_to_file(data)
+      write_template_to_file(data,doc_file_name(data))
     end
   end
 
@@ -52,10 +52,10 @@ class DestinationDocBuilder
     return eruby.result(binding()).to_s
   end
 
-  def write_template_to_file(destination_data)
-    File.open("#{doc_file_name(destination_data)}","w") do |f|
-      f.puts populate_template(destination_data)
-    end
+  def write_template_to_file(destination_data,file_name)
+    out_file = File.open("#{file_name}","w")
+    out_file.puts populate_template(destination_data)
+    out_file.close
   end
 
 

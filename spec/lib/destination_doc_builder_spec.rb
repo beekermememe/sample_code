@@ -26,9 +26,18 @@ RSpec.describe DestinationData do
         })
       template_output = doc_builder.populate_template(new_data)
       expect(template_output).to match /Good place to visit/
-      out = File.open("#{Dir.pwd}/output/data.html","w")
-      out.puts template_output
-      out.close
+      #out = File.open("#{Dir.pwd}/output/data.html","w")
+      #out.puts template_output
+      #out.close
+    end
+
+    it "should write the template to the file" do
+      file_puts_double = double("puts")
+      expect(file_puts_double).to receive(:puts).and_return(nil)
+      expect(file_puts_double).to receive(:close).and_return(nil)
+      expect(doc_builder).to receive(:populate_template).and_return(nil)
+      expect(File).to receive(:open).and_return(file_puts_double)
+      doc_builder.write_template_to_file({},"outfile")
     end
   end
 
@@ -82,13 +91,6 @@ RSpec.describe DestinationData do
       expect(doc_builder).to receive(:doc_file_name).and_return("mylink")
       filename = doc_builder.doc_link(doc_builder.doc_data[1])
       expect(filename).to match "mylink"
-    end
-  end
-
-  describe "template building" do
-    it "should return a string using the template and document data" do
-
-
     end
   end
 
