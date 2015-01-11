@@ -6,7 +6,7 @@ require "destination_doc_builder"
 
 # Call this with the first argument as the taxonomy file (full path), the second argument and the destinations file (full path)
 # and the third argument with the output directory location (full path))
-# If one of these are incorrecly entered, it will use a preset default - demo purpose only
+# If one of these are incorrectly entered, it will use a preset default - demo purpose only
 
 taxonomy_file = ARGV[0]
 destinations_file = ARGV[1]
@@ -31,6 +31,7 @@ end
 
 puts "FYI - processing parameters :\n Taxonomy file -> #{taxonomy_file}\n Destinations file -> #{destinations_file}\n Output location -> #{output_directory}"
 
+# ingest the taxonomy and destinations data
 taxonomy_ingestor = DestinationTaxonomyIngestor.new({
   taxonomy_file: taxonomy_file,
 })
@@ -47,9 +48,7 @@ destinations.each do |atlas_id,destination_object|
   destination_object.update_destination_content(destination_data[atlas_id])
 end
 
-doc_builder = DestinationDocBuilder.new(destinations,"#{output_directory}")
-
-doc_builder.populate_html_files
 # 3 open up the template and populate it using the model
+doc_builder = DestinationDocBuilder.new(destinations,"#{output_directory}")
+doc_builder.populate_html_files
 
-# for each object populate the template and write the file

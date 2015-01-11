@@ -4,28 +4,6 @@ require 'nokogiri'
 require 'destination_content'
 require 'destination_data'
 
-# Basic operational flow for using this Class
-
-# get the infile name
-# open with Nokogiri
-# handle errors if need be
-# populate objects
-# return objects back
-
-# data is of the format
-
-#  <top node>
-#    <sub-node>
-#    <sub-node>
-
-# So we will read in top nodes create parent_destinations
-# then read through each parent_destination and create child docs
-# --- in the future we could do this recursively until all levels are processed
-# --- we should be able to traverse up and down programmatically at that point
-
-# once this is done, we can create a lookup table with the destination and the atlas id
-# then we can go through the destinations an update the content for eash destination object
-
 class DestinationTaxonomyIngestor
 
   def initialize(files_to_process = {taxonomy_file: ""})
@@ -134,7 +112,7 @@ class DestinationTaxonomyIngestor
     return lookup
   end
 
-  # We need a helper method to update an existing data object
+  # helper method to update an existing data object
   def update_destination_data_object(existing_data,new_data)
     existing_data.update(new_data)
     return existing_data

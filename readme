@@ -30,7 +30,7 @@ Install ruby 2.1.5
 Install bundle
 bundle install
 ruby -Ilib runner.rb mytaxonomyfile.xml mydestinationsfile.xml myoutputfolder
-open a browser and navigate to the output folder and open a file that was created. You should be able to navigate
+open a browser and navigate to the output folder and open a file that was created. You should be able to navigate up and down the destinations.
 
 To run specs
 
@@ -42,4 +42,3 @@ rspec
 Some Notes:
 
 I use pry for debugging. This was my first time using RSPEC 3.1 so it was interesting learning about doubles. Most of my classes try to avoid instance variables when executing functions. If I do use them, I try to rely on the ones that are immutable. I used erubis for templating the html and added some template logic to hide/show elements based on the state of the data passed. I did a sanity check using the 2 files passed and was able to navigate up and down successfully.
-

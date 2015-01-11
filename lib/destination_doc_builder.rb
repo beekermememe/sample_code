@@ -22,21 +22,19 @@ class DestinationDocBuilder
   end
 
   # Using the lookup hash we can find the place_name
-
   def get_link_info(destination_id)
     doc = @doc_data[destination_id]
     name = doc.nil? ? nil : doc.content.place_name
     link = doc.nil? ? nil : doc_link(doc)
     return name,link
   end
-  # Change this if you need to customize the url
 
+  # Change this if you need to customize the url
   def doc_link(destination_data)
     doc_file_name(destination_data)
   end
   
   # returns a string that can be written to a file
-
   def populate_template(destination_data)
     eruby = Erubis::Eruby.new(File.read @template)
     data = destination_data
@@ -57,7 +55,5 @@ class DestinationDocBuilder
     out_file.puts populate_template(destination_data)
     out_file.close
   end
-
-
 
 end
